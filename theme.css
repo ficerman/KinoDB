@@ -16459,3 +16459,6 @@ caption {
 .jumbotron-heading{
 color: #333
 }
+#genreSelect {
+  max-width: 200px; 
+}
