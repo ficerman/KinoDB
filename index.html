@@ -20,12 +20,30 @@
             <span class="input-group-text border-0" id="search-addon">
                 <i class="fas fa-search"></i>
             </span>
+            <select class="form-select" id="genreSelect" aria-label="Default select example">
+                <option value="" selected>All Genres</option>
+                <option value="28">Action</option>
+                <option value="35">Comedy</option>
+                <option value="18">Drama</option>
+                <option value="12">Adventure</option>
+                <option value="53">Thriller</option>
+            </select>
+        </div>
     </section>
+    
     <div class="container">
         <h1>Search Results:</h1>
+        <label for="sortSelect">Sort By:</label>
+        <select class="form-select" id="sortSelect" aria-label="Default select example">
+            <option value="none" selected>No Sorting</option>
+            <option value="asc">Oldest First</option>
+            <option value="desc">Newest First</option>
+        </select>
+
         <div class="row" id="searchPreview">
 
         </div>
+        
     </div>
     <div class="container">
         <h1>Popular:</h1>
@@ -43,5 +61,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <script src="main.js"></script>
 </body>
