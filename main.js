@@ -157,3 +157,88 @@ searchInput.addEventListener("input", function (evt) {
     })
     .catch(err => console.error(err))
 })
+
+const sortSelect = document.getElementById("sortSelect");
+
+sortSelect.addEventListener("change", function () {
+    const sortOption = this.value;
+
+    if (sortOption === "asc") {
+        sortMoviesByYear(true); 
+    } else if (sortOption === "desc") {
+        sortMoviesByYear(false); 
+    }
+});
+
+function sortMoviesByYear(ascending) {
+    const movieElements = document.querySelectorAll(".col-sm");
+    const movieArray = Array.from(movieElements);
+
+    movieArray.sort((a, b) => {
+        const yearA = getMovieYear(a);
+        const yearB = getMovieYear(b);
+
+        if (ascending) {
+            return yearA - yearB;
+        } else {
+            return yearB - yearA;
+        }
+    });
+
+    const parent = document.getElementById("popular");
+    parent.innerHTML = ""; 
+    movieArray.forEach(movie => {
+        parent.appendChild(movie);
+    });
+}
+
+function getMovieYear(movieElement) {
+    const releaseDateText = movieElement.querySelector("h1").innerText;
+    return parseInt(releaseDateText.substring(releaseDateText.length - 5, releaseDateText.length - 1));
+}
+
+const genreSelect = document.getElementById("genreSelect");
+
+genreSelect.addEventListener("change", function () {
+    const selectedGenreId = this.value;
+
+    if (selectedGenreId) {
+        fetchMoviesByGenre(selectedGenreId);
+    } else {
+        fetchPopularMovies();
+    }
+});
+
+function fetchMoviesByGenre(genreId) {
+    fetch(
+        "https://api.themoviedb.org/3/discover/movie?with_genres=" +
+            genreId +
+            "&language=en-US&page=1",
+        options
+    )
+        .then((response) => response.json())
+        .then((response) => {
+            displayMovies(response.results, "searchPreview");
+        })
+        .catch((err) => console.error(err));
+}
+
+function fetchPopularMovies() {
+    fetch(
+        "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1",
+        options
+    )
+        .then((response) => response.json())
+        .then((response) => {
+            displayMovies(response.results, "searchPreview");
+        })
+        .catch((err) => console.error(err));
+}
+
+function displayMovies(movies, containerId) {
+    const container = document.getElementById(containerId);
+    container.innerHTML = "";
+    movies.forEach((movie) => {
+        addMovie(container, movie.id);
+    });
+}
